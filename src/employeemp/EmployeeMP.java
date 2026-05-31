@@ -216,6 +216,80 @@ public class EmployeeMP extends Application {
         
         
     }
+       
+// ══════════════════════════════════════════════════════════════════════════
+    //  DEPARTMENTS LIST
+    // ══════════════════════════════════════════════════════════════════════════
+    void showDepartments() {
+        VBox page = page();
+
+        Label title = title("Department Details");
+        Button addBtn = redButton("Add Department");
+        addBtn.setOnAction(e -> showDepartmentForm());
+        HBox btnRow = new HBox(addBtn); btnRow.setAlignment(Pos.CENTER);
+
+        VBox tableBox = new VBox(2);
+        tableBox.setStyle("-fx-border-color:#888; -fx-border-width:1; -fx-padding:14;");
+
+        tableBox.getChildren().add(deptRow(true, "SL No", "Department Name", null));
+        int i = 1;
+        for (String[] dept : departments) {
+            final String[] d = dept;
+            Button del = smallRedButton("Delete");
+            del.setOnAction(e -> {
+                departments.remove(d);
+                showDepartments();
+            });
+            tableBox.getChildren().add(deptRow(false, String.valueOf(i++), d[0], del));
+        }
+
+        page.getChildren().addAll(title, btnRow, tableBox);
+        setContent(page);
+    }
+
+    HBox deptRow(boolean bold, String sl, String name, Button action) {
+        HBox row = new HBox(); row.setPadding(new Insets(5, 0, 5, 0));
+        Label l1 = cell(sl, bold, 70);
+        Label l2 = cell(name, bold, -1);
+        HBox.setHgrow(l2, Priority.ALWAYS);
+        row.getChildren().addAll(l1, l2);
+        if (action != null) row.getChildren().add(action);
+        return row;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  DEPARTMENT FORM
+    // ══════════════════════════════════════════════════════════════════════════
+    void showDepartmentForm() {
+        sidebar.highlight("Departments");
+        VBox page = page();
+
+        Label title = title("Add Department");
+        TextField nameF = field("Name");
+        TextField taskF = field("Task of the dept");
+        TextField descF = field("Department");
+        nameF.setMaxWidth(560);
+        taskF.setMaxWidth(340);
+        descF.setMaxWidth(340);
+
+        Button addBtn = redButton("Add Dept");
+        addBtn.setOnAction(e -> {
+            String name = nameF.getText().trim();
+            if (name.isEmpty()) { alert("Department name is required."); return; }
+            departments.add(new String[]{name, taskF.getText().trim(), descF.getText().trim()});
+            alert("Department added!");
+            showDepartments();
+        });
+
+        page.getChildren().addAll(
+            title,
+            vbox("Department Name", nameF),
+            vbox("Task of the Department", taskF),
+            vbox("Description", descF),
+            addBtn
+        );
+        setContent(page);
+    }
 
    
 
