@@ -216,6 +216,79 @@ public class EmployeeMP extends Application {
         
         
     }
+     // ══════════════════════════════════════════════════════════════════════════
+    //  EMPLOYEES LIST
+    // ══════════════════════════════════════════════════════════════════════════
+    void showEmployees() {
+        VBox page = page();
+
+        Label title = title("Employees Details");
+        Button addBtn = redButton("Add Employee");
+        addBtn.setOnAction(e -> showEmployeeForm());
+
+        HBox btnRow = new HBox(addBtn); btnRow.setAlignment(Pos.CENTER);
+
+        VBox table = new VBox(2);
+        table.getChildren().add(tableRow(true, "Name", "Employee ID", "Department", "Designation", "Salary"));
+        for (String[] emp : employees) {
+            table.getChildren().add(tableRow(false, emp[0], emp[1], emp[2], emp[3], emp[4]));
+        }
+
+        page.getChildren().addAll(title, btnRow, table);
+        setContent(page);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  EMPLOYEE FORM
+    // ══════════════════════════════════════════════════════════════════════════
+    void showEmployeeForm() {
+        sidebar.highlight("Employees");
+        VBox page = page();
+
+        Label title = title("Employees Form");
+
+        TextField nameF  = field("Name");
+        TextField emailF = field("Email");
+        TextField dobF   = field("DD/MM/YYYY");
+        TextField deptF  = field("Department");
+        TextField salF   = field("Salary");
+        TextField passF  = field("Password");
+
+        nameF.setMaxWidth(560);
+
+        HBox row1 = new HBox(16, vbox("Email", emailF), vbox("Date of Birth", dobF));
+        HBox row2 = new HBox(16, vbox("Department", deptF), vbox("Salary", salF));
+        for (HBox r : new HBox[]{row1, row2}) {
+            for (var c : r.getChildren()) HBox.setHgrow(c, Priority.ALWAYS);
+        }
+
+        passF.setMaxWidth(300);
+
+        Button submit = redButton("Submit");
+        submit.setOnAction(e -> {
+            String name = nameF.getText().trim();
+            String dept = deptF.getText().trim();
+            String sal  = salF.getText().trim();
+            if (name.isEmpty() || dept.isEmpty()) {
+                alert("Name and Department are required.");
+                return;
+            }
+            String id = String.format("%05d", 8000 + employees.size() + 1);
+            employees.add(new String[]{name, id, dept, "Officer", "$" + sal});
+            alert("Employee added successfully!");
+            showEmployees();
+        });
+
+        page.getChildren().addAll(
+            title,
+            vbox("Name", nameF),
+            row1, row2,
+            vbox("Password", passF),
+            submit
+        );
+        setContent(page);
+    }
+
 
    
 
