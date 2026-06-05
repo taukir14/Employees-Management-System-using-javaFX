@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
@@ -48,8 +48,7 @@ public class EmployeeMP extends Application {
         launch(args);
     }
     
-}
-=======
+}=======
 import javafx.application.Application;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -389,19 +388,20 @@ public class EmployeeMP extends Application {
 
         Label title = title("Employees Form");
 
-        TextField nameF  = field("Name");
+        TextField nameF = field("Name");
         TextField emailF = field("Email");
-        TextField dobF   = field("DD/MM/YYYY");
-        TextField deptF  = field("Department");
-        TextField salF   = field("Salary");
-        TextField passF  = field("Password");
+        TextField dobF = field("DD/MM/YYYY");
+        TextField deptF = field("Department");
+        TextField salF = field("Salary");
+        TextField passF = field("Password");
 
         nameF.setMaxWidth(560);
 
         HBox row1 = new HBox(16, vbox("Email", emailF), vbox("Date of Birth", dobF));
         HBox row2 = new HBox(16, vbox("Department", deptF), vbox("Salary", salF));
-        for (HBox r : new HBox[]{row1, row2}) {
-            for (var c : r.getChildren()) HBox.setHgrow(c, Priority.ALWAYS);
+        for (HBox r : new HBox[] { row1, row2 }) {
+            for (var c : r.getChildren())
+                HBox.setHgrow(c, Priority.ALWAYS);
         }
 
         passF.setMaxWidth(300);
@@ -428,7 +428,7 @@ public class EmployeeMP extends Application {
     }
 
     // ══════════════════════════════════════════════════════════════════════════
-    //  LEAVES (static data, filter buttons)- Shishir2
+    // LEAVES (static data, filter buttons)- Shishir2
     // ══════════════════════════════════════════════════════════════════════════
     void showLeaves(String filter) {
         VBox page = page();
@@ -437,10 +437,10 @@ public class EmployeeMP extends Application {
 
         Button appr = redButton("Approved");
         Button pend = redButton("Pending");
-        Button rej  = redButton("Rejected");
+        Button rej = redButton("Rejected");
         appr.setOnAction(e -> showLeaves("Approved"));
         pend.setOnAction(e -> showLeaves("Pending"));
-        rej.setOnAction(e  -> showLeaves("Rejected"));
+        rej.setOnAction(e -> showLeaves("Rejected"));
 
         HBox filterRow = new HBox(8, appr, pend, rej);
 
@@ -451,17 +451,17 @@ public class EmployeeMP extends Application {
         for (String[] l : leaves) {
             if (filter == null || l[4].equals(filter)) {
                 table.getChildren().add(tableRow(false,
-                    String.valueOf(i++), l[0], l[1], l[2], l[3], l[4]));
+                        String.valueOf(i++), l[0], l[1], l[2], l[3], l[4]));
             }
         }
 
         page.getChildren().addAll(title, filterRow, table);
         setContent(page);
     }
-//Mahi you will make salary Section
-       
-// ══════════════════════════════════════════════════════════════════════════
-    //  SALARY (static data, edit button)-Mahi02
+    // Mahi you will make salary Section
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // SALARY (static data, edit button)-Mahi02
     // ══════════════════════════════════════════════════════════════════════════
     void showSalary() {
         VBox page = page();
@@ -481,14 +481,18 @@ public class EmployeeMP extends Application {
                 dlg.setHeaderText("Update salary for " + row[0]);
                 dlg.setContentText("New Salary:");
                 dlg.showAndWait().ifPresent(val -> {
-                    try { Double.parseDouble(val); row[3] = val; showSalary(); }
-                    catch (NumberFormatException ignored) {}
+                    try {
+                        Double.parseDouble(val);
+                        row[3] = val;
+                        showSalary();
+                    } catch (NumberFormatException ignored) {
+                    }
                 });
             });
 
             HBox tableRow = new HBox();
             tableRow.setPadding(new Insets(5, 0, 5, 0));
-            String[] vals = {String.valueOf(i++), row[0], row[1], row[2], row[3]};
+            String[] vals = { String.valueOf(i++), row[0], row[1], row[2], row[3] };
             for (String v : vals) {
                 Label lbl = cell(v, false, 120);
                 HBox.setHgrow(lbl, Priority.ALWAYS);
@@ -501,8 +505,88 @@ public class EmployeeMP extends Application {
         page.getChildren().addAll(title, table);
         setContent(page);
     }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // HELPERS-Taukir-2
+    // ══════════════════════════════════════════════════════════════════════════
+    VBox page() {
+        VBox v = new VBox(20);
+        v.setPadding(new Insets(30, 50, 30, 50));
+        v.setStyle("-fx-background-color:" + BG + ";");
+        return v;
+    }
+
+    Label title(String text) {
+        Label l = new Label(text);
+        l.setFont(Font.font("Arial", FontWeight.BOLD, 26));
+        return l;
+    }
+
+    TextField field(String prompt) {
+        TextField tf = new TextField();
+        tf.setPromptText(prompt);
+        tf.setStyle("-fx-background-color:white; -fx-border-color:#333; " +
+                "-fx-border-radius:20; -fx-background-radius:20; -fx-padding:6 12;");
+        return tf;
+    }
+
+    Button redButton(String text) {
+        Button b = new Button(text);
+        b.setStyle("-fx-background-color:" + DARK_RED + "; -fx-text-fill:white; " +
+                "-fx-background-radius:6; -fx-font-size:13; -fx-padding:6 16;");
+        return b;
+    }
+
+    Button smallRedButton(String text) {
+        Button b = new Button(text);
+        b.setStyle("-fx-background-color:" + DARK_RED + "; -fx-text-fill:white; " +
+                "-fx-background-radius:6; -fx-font-size:11; -fx-padding:3 10;");
+        return b;
+    }
+
+    VBox vbox(String labelText, javafx.scene.Node field) {
+        Label l = new Label(labelText);
+        l.setFont(Font.font("Arial", FontWeight.BOLD, 13));
+        VBox v = new VBox(4, l, field);
+        HBox.setHgrow(v, Priority.ALWAYS);
+        return v;
+    }
+
+    HBox tableRow(boolean bold, String... cols) {
+        HBox row = new HBox();
+        row.setPadding(new Insets(5, 0, 5, 0));
+        for (String v : cols) {
+            Label lbl = cell(v, bold, 120);
+            HBox.setHgrow(lbl, Priority.ALWAYS);
+            row.getChildren().add(lbl);
+        }
+        return row;
+    }
+
+    Label cell(String text, boolean bold, double width) {
+        Label l = new Label(text);
+        l.setFont(Font.font("Arial", bold ? FontWeight.BOLD : FontWeight.NORMAL, 13));
+        if (width > 0)
+            l.setPrefWidth(width);
+        l.setMaxWidth(Double.MAX_VALUE);
+        return l;
+    }
+
+    long parseSalary(String s) {
+        try {
+            return (long) Double.parseDouble(s.replace("$", ""));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    void alert(String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
+        a.setHeaderText(null);
+        a.showAndWait();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
 }
->>>>>>> origin/Mahi
