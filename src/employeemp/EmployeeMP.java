@@ -407,6 +407,48 @@ public class EmployeeMP extends Application {
         setContent(page);
     }
 //Mahi you will make salary Section
+       
+// ══════════════════════════════════════════════════════════════════════════
+    //  SALARY (static data, edit button)-Mahi02
+    // ══════════════════════════════════════════════════════════════════════════
+    void showSalary() {
+        VBox page = page();
+
+        Label title = title("Salary Details");
+
+        VBox table = new VBox(4);
+        table.getChildren().add(tableRow(true, "SL No", "Name", "Dept", "Employee ID", "$Salary", "Action"));
+
+        int i = 1;
+        for (String[] s : salaries) {
+            final String[] row = s;
+            Button editBtn = smallRedButton("EDIT");
+            editBtn.setOnAction(e -> {
+                TextInputDialog dlg = new TextInputDialog(row[3]);
+                dlg.setTitle("Edit Salary");
+                dlg.setHeaderText("Update salary for " + row[0]);
+                dlg.setContentText("New Salary:");
+                dlg.showAndWait().ifPresent(val -> {
+                    try { Double.parseDouble(val); row[3] = val; showSalary(); }
+                    catch (NumberFormatException ignored) {}
+                });
+            });
+
+            HBox tableRow = new HBox();
+            tableRow.setPadding(new Insets(5, 0, 5, 0));
+            String[] vals = {String.valueOf(i++), row[0], row[1], row[2], row[3]};
+            for (String v : vals) {
+                Label lbl = cell(v, false, 120);
+                HBox.setHgrow(lbl, Priority.ALWAYS);
+                tableRow.getChildren().add(lbl);
+            }
+            tableRow.getChildren().add(editBtn);
+            table.getChildren().add(tableRow);
+        }
+
+        page.getChildren().addAll(title, table);
+        setContent(page);
+    }
     public static void main(String[] args) {
         launch(args);
     }
