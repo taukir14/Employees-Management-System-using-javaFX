@@ -223,7 +223,7 @@ public class EmployeeMP extends Application {
     // ══════════════════════════════════════════════════════════════════════════
     // DEPARTMENTS LIST
     // ══════════════════════════════════════════════════════════════════════════
-    void showDepartments() {
+    void showEmployees() {
         VBox page = page();
 
         Label title = title("Department Details");
@@ -232,22 +232,13 @@ public class EmployeeMP extends Application {
         HBox btnRow = new HBox(addBtn);
         btnRow.setAlignment(Pos.CENTER);
 
-        VBox tableBox = new VBox(2);
-        tableBox.setStyle("-fx-border-color:#888; -fx-border-width:1; -fx-padding:14;");
-
-        tableBox.getChildren().add(deptRow(true, "SL No", "Department Name", null));
-        int i = 1;
-        for (String[] dept : departments) {
-            final String[] d = dept;
-            Button del = smallRedButton("Delete");
-            del.setOnAction(e -> {
-                departments.remove(d);
-                showDepartments();
-            });
-            tableBox.getChildren().add(deptRow(false, String.valueOf(i++), d[0], del));
+        VBox table = new VBox(2);
+        table.getChildren().add(tableRow(true, "Name", "Employee ID", "Department", "Designation", "Salary"));
+        for (String[] emp : employees) {
+            table.getChildren().add(tableRow(false, emp[0], emp[1], emp[2], emp[3], emp[4]));
         }
 
-        page.getChildren().addAll(title, btnRow, tableBox);
+        page.getChildren().addAll(title, btnRow, table);
         setContent(page);
     }
 
@@ -340,20 +331,31 @@ public class EmployeeMP extends Application {
     // ══════════════════════════════════════════════════════════════════════════
     // DEPARTMENT FORM
     // ══════════════════════════════════════════════════════════════════════════
-    void showDepartmentForm() {
-        sidebar.highlight("Departments");
+    void showEmployeeForm() {
+        sidebar.highlight("Employees");
         VBox page = page();
 
-        Label title = title("Add Department");
-        TextField nameF = field("Name");
-        TextField taskF = field("Task of the dept");
-        TextField descF = field("Department");
-        nameF.setMaxWidth(560);
-        taskF.setMaxWidth(340);
-        descF.setMaxWidth(340);
+        Label title = title("Employees Form");
 
-        Button addBtn = redButton("Add Dept");
-        addBtn.setOnAction(e -> {
+        TextField nameF  = field("Name");
+        TextField emailF = field("Email");
+        TextField dobF   = field("DD/MM/YYYY");
+        TextField deptF  = field("Department");
+        TextField salF   = field("Salary");
+        TextField passF  = field("Password");
+
+        nameF.setMaxWidth(560);
+
+        HBox row1 = new HBox(16, vbox("Email", emailF), vbox("Date of Birth", dobF));
+        HBox row2 = new HBox(16, vbox("Department", deptF), vbox("Salary", salF));
+        for (HBox r : new HBox[]{row1, row2}) {
+            for (var c : r.getChildren()) HBox.setHgrow(c, Priority.ALWAYS);
+        }
+
+        passF.setMaxWidth(300);
+
+        Button submit = redButton("Submit");
+        submit.setOnAction(e -> {
             String name = nameF.getText().trim();
             if (name.isEmpty()) {
                 alert("Department name is required.");
