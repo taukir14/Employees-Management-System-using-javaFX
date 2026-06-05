@@ -10,7 +10,7 @@ This project was collaboratively designed and implemented by a team of 3 develop
 
 | Name | Student ID |
 | :--- | :--- |
-| **Taukir Tajammul** | 0802510405101047 |
+| **TAUKIR TAJAMMUL** | 0802510405101047 |
 | **MD. MAHFUJ HABIB MAHI** | 0802510405101010 |
 | **MD. SHADID AHAMED** | 0802510205101025 |
 
