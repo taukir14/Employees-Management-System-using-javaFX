@@ -375,6 +375,38 @@ public class EmployeeMP extends Application {
         setContent(page);
     }
 
+    // ══════════════════════════════════════════════════════════════════════════
+    //  LEAVES (static data, filter buttons)- Shishir2
+    // ══════════════════════════════════════════════════════════════════════════
+    void showLeaves(String filter) {
+        VBox page = page();
+
+        Label title = title("Leaves Details");
+
+        Button appr = redButton("Approved");
+        Button pend = redButton("Pending");
+        Button rej  = redButton("Rejected");
+        appr.setOnAction(e -> showLeaves("Approved"));
+        pend.setOnAction(e -> showLeaves("Pending"));
+        rej.setOnAction(e  -> showLeaves("Rejected"));
+
+        HBox filterRow = new HBox(8, appr, pend, rej);
+
+        VBox table = new VBox(4);
+        table.getChildren().add(tableRow(true, "SL No", "Name", "Dept", "Leave Type", "Days", "Status"));
+
+        int i = 1;
+        for (String[] l : leaves) {
+            if (filter == null || l[4].equals(filter)) {
+                table.getChildren().add(tableRow(false,
+                    String.valueOf(i++), l[0], l[1], l[2], l[3], l[4]));
+            }
+        }
+
+        page.getChildren().addAll(title, filterRow, table);
+        setContent(page);
+    }
+//Mahi you will make salary Section
     public static void main(String[] args) {
         launch(args);
     }
