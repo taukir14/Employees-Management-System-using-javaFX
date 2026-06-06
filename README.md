@@ -1,3 +1,12 @@
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/df4b29fe-fe6d-4dac-8ba0-bf6a5a49ff7d" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/dfd3f090-4b37-4d9c-ac3d-38e8531ba41b" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/ef662900-d42f-45f4-a6cf-2af203b37b12" />
+
+
+
+
+
+
 # Employee Management System (JavaFX)
 
 A comprehensive and visually intuitive **Employee Management System** built using **JavaFX**. This desktop application was developed as a university lab project to simplify corporate administrative tasks such as tracking employee details, managing departmental tasks, filtering leave requests, and updating monthly payroll distributions.
